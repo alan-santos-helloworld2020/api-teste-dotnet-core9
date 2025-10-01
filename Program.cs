@@ -8,6 +8,16 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<ICliente, ClienteService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("*", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -20,6 +30,7 @@ if (app.Environment.IsDevelopment())
        
     });
 }
+app.UseCors("*");
 
 app.UseHttpsRedirection();
 
